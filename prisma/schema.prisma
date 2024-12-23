@@ -26,12 +26,12 @@ model User {
   urls             String[]
   pronouns         String?
   bio              String?
-  Session          Session[]
-  Account          Account[]
-  Member           Member[]
-  Invitation       Invitation[]
-  TwoFactor        TwoFactor[]
-  Passkey          Passkey[]
+  sessions         Session[]
+  accounts         Account[]
+  members          Member[]
+  invitations      Invitation[]
+  twofactors       TwoFactor[]
+  passkeys         Passkey[]
   Ticket           Ticket[]
 
   @@unique([email])
@@ -87,14 +87,14 @@ model Verification {
 }
 
 model Organization {
-  id         String       @id @map("_id")
-  name       String
-  slug       String?
-  logo       String?
-  createdAt  DateTime
-  metadata   String?
-  Member     Member[]
-  Invitation Invitation[]
+  id          String       @id @map("_id")
+  name        String
+  slug        String?
+  logo        String?
+  createdAt   DateTime
+  metadata    String?
+  members     Member[]
+  invitations Invitation[]
 
   @@unique([slug])
   @@map("organization")

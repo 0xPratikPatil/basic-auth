@@ -687,20 +687,20 @@ const DangerZone = () => {
   );
 };
 
-const SessionButton = ({ sessionId, currentSessionId, authClient }: any) => {
+const SessionButton = ({ session, currentSessionId, authClient }: any) => {
   const router = useRouter();
   const [isTerminating, setIsTerminating] = React.useState(false);
   const [isSigningOut, setIsSigningOut] = React.useState(false);
 
-  const isCurrentSession = sessionId === currentSessionId;
+  const isCurrentSession = session.id  === currentSessionId;
 
   const handleSignOut = async () => {
     setIsSigningOut(true);
     await authClient.signOut({
       fetchOptions: {
         onSuccess() {
-          redirect("/");
           toast.success("You've successfully signed out.");
+          redirect("/");
         },
       },
     });
@@ -710,7 +710,7 @@ const SessionButton = ({ sessionId, currentSessionId, authClient }: any) => {
   const handleRevokeSession = async () => {
     setIsTerminating(true);
     const res = await authClient.revokeSession({
-      id: sessionId,
+      token: session.token,
     });
 
     if (res.error) {
@@ -1001,7 +1001,7 @@ const ActiveSession = ({
           <Badge variant="secondary">Current Session</Badge>
         ) : null}
         <SessionButton
-          sessionId={session.id}
+          session={session}
           currentSessionId={currentSession?.session.id}
           authClient={authClient}
         />

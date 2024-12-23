@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import SettingsSecurityPage from "@/components/settings/security-page";
 
 const SecurityPage = async () => {
-  const [session, activeSessions] = await Promise.all([
+  const [session,activeSessions] = await Promise.all([
     auth.api.getSession({
       headers: await headers(),
     }),
@@ -14,7 +14,6 @@ const SecurityPage = async () => {
   ]).catch(() => {
     throw redirect("/login");
   });
-  if (!session || !activeSessions) return redirect("/login");
   return (
     <SettingsSecurityPage
       session={JSON.parse(JSON.stringify(session))}
