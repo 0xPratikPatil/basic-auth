@@ -26,7 +26,7 @@ export const auth = betterAuth({
     additionalFields: additionalUserFields,
   },
   emailVerification: {
-    async sendVerificationEmail(user, url) {
+    async sendVerificationEmail({ user, url}) {
       await resend.emails.send({
         from: process.env.SEND_EMAIL_FROM!,
         to: user.email,
@@ -39,7 +39,7 @@ export const auth = betterAuth({
   },
   emailAndPassword: {
     enabled: true,
-    async sendResetPassword(user, url) {
+    async sendResetPassword({ user, url }) {
       await resend.emails.send({
         from: process.env.SEND_EMAIL_FROM!,
         to: user.email,
@@ -81,7 +81,7 @@ export const auth = betterAuth({
         async sendOTP(user, otp) {
           await resend.emails.send({
             from: process.env.SEND_EMAIL_FROM!,
-            to: user.email,
+            to: user.user.email,
             subject: "Your OTP",
             html: `Your OTP is ${otp}`,
           });
